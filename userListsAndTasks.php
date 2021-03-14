@@ -11,14 +11,10 @@ $authorizedUserName =  $_SESSION['userName'];
 
 /* Connect to DB */
 
-include_once "config/database.php";
-include_once "models/user.php";
-include_once "models/list.php";
-include_once "models/task.php";
-
-$database = new Database();
-$databaseConnection = $database->getConnection();
-
+require_once "connect.php";
+use models\User;
+use models\ToDoList;
+use models\Task;
 
 /* Read all lists of authorized user */
 

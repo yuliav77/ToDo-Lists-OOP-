@@ -1,5 +1,7 @@
 <?php
 
+namespace config;
+
 class Database
 {
     private $host = "localhost";
@@ -12,7 +14,7 @@ class Database
         $this->conn = null;
 
         try {
-            $this->conn = new PDO(
+            $this->conn = new \PDO(
                 sprintf('mysql:host=%s;dbname=%s', $this->host, $this->dbName),
                 $this->userName,
                 $this->password,

@@ -1,16 +1,14 @@
 <?php
 
+session_start();
+
 /* Connect to DB */
 
-include_once "config/database.php";
-include_once "models/user.php";
-include_once "models/list.php";
-include_once "models/task.php";
+require_once "connect.php";
+use models\User;
+use models\ToDoList;
+use models\Task;
 
-$database = new Database();
-$databaseConnection = $database->getConnection();
-
-session_start();
 
 /* Form processing */
 
