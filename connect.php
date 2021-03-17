@@ -1,12 +1,10 @@
 <?php
 
 /* Connect to DB */
-require_once "config/database.php";
-require_once "models/user.php";
-require_once "models/todolist.php";
-require_once "models/task.php";
 
-use config\Database;
+require_once 'vendor/autoload.php';
+
+use src\config\Database;
 
 $database = new Database();
 $databaseConnection = $database->getConnection();

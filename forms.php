@@ -5,9 +5,9 @@ session_start();
 /* Connect to DB */
 
 require_once "connect.php";
-use models\User;
-use models\ToDoList;
-use models\Task;
+use src\models\User;
+use src\models\ToDoList;
+use src\models\Task;
 
 
 /* Form processing */
@@ -17,18 +17,19 @@ if(isset($_POST["submitNewList"])) {
     /* Add a new ToDoList */
 
     $todoList = new ToDoList($databaseConnection);
-    $todoList->title = $_POST["listTitle"];
-    $todoList->userId = $_POST["userId"];
+    $todoList->setTitle($_POST["listTitle"]);
+    $todoList->setUserId($_POST["userId"]);
     $todoList->create();
-    $listId = $todoList->id;
+    $listId = $todoList->getId();
 
 } elseif(isset($_POST['taskIdForCheck'])) {
 
     /* Modify "is_done" of a task */
 
+    $isDone = isset($_POST['checkIsDone']) ? 1 : 0;
     $taskToModifyDone = new Task($databaseConnection);
-    $taskToModifyDone->id = $_POST['taskIdForCheck'];
-    $taskToModifyDone->isDone = isset($_POST['checkIsDone']) ? 1 : 0;
+    $taskToModifyDone->setId($_POST['taskIdForCheck']);
+    $taskToModifyDone->setIsDone($isDone) ;
     $taskToModifyDone->mark();
 
 } elseif(isset($_POST['submitNewTask'])) {
@@ -36,32 +37,33 @@ if(isset($_POST["submitNewList"])) {
     /* Add a new task */
 
     $taskToAdd = new Task($databaseConnection);
-    $taskToAdd->title = $_POST['taskTitle'];
-    $taskToAdd->listId = $_POST['listId'];
+    $taskToAdd->setTitle($_POST['taskTitle']);
+    $taskToAdd->setListId($_POST['listId']);
     $taskToAdd->create();
 
 } elseif(isset($_POST['delete'])) {
 
     /* Delete a task */
 
-    $taskToDelete =  new Task($databaseConnection);
-    $taskToDelete->id = $_POST['taskId'];
+    $taskToDelete = new Task($databaseConnection);
+    $taskToDelete->setId($_POST['taskId']);
     $taskToDelete->delete();
 
 } elseif(isset($_POST['submitUser'])) {
 
     /* Login user */
 
+    $password = isset($_POST['userPassword']) ? $_POST['userPassword'] : '';
     $userToLogin = new User($databaseConnection);
-    $userToLogin->name = $_POST['userName'];
-    $userToLogin->password = isset($_POST['userPassword']) ? $_POST['userPassword'] : '';
+    $userToLogin->setTitle($_POST['userName']);
+    $userToLogin->setPassword($password);
     $existingUser = $userToLogin->checkIfUserExistsWithNameAndPassword();
     if(!$existingUser) {
         $_SESSION['loginErrorMessage'] = 'Incorrect login or password! Please, try again:';
     } else {
         session_start();
-        $_SESSION['userId'] = $existingUser;
-        $_SESSION['userName'] = $userToLogin->name;
+        $_SESSION['userId'] = $existingUser[0]['id'];
+        $_SESSION['userName'] = $userToLogin->getTitle();
         unset($_SESSION['loginErrorMessage']);
     }
 
@@ -69,15 +71,16 @@ if(isset($_POST["submitNewList"])) {
 
     /* Create new user */
 
+    $password = isset($_POST['userPassword']) ? $_POST['userPassword'] : '';
     $userToRegister = new User($databaseConnection);
-    $userToRegister->name = $_POST['userName'];
-    $userToRegister->password = isset($_POST['userPassword']) ? $_POST['userPassword'] : '';
+    $userToRegister->setTitle($_POST['userName']);
+    $userToRegister->setPassword($password);
     $existingUserWithName = $userToRegister->checkIfUserExistsWithName();
 
     if (empty($existingUserWithName)) {
         if ($userToRegister->create()) {
-            $_SESSION['userId'] = $userToRegister->id;
-            $_SESSION['userName'] = $userToRegister->name;
+            $_SESSION['userId'] = $userToRegister->getId();
+            $_SESSION['userName'] = $userToRegister->getTitle();
             unset($_SESSION['regErrorMessage']);
         }
     } else {

@@ -64,7 +64,7 @@ $pageTitle = "ToDo Lists";
                                     <!-- Form to mark if task is done -->
 
                                     <form method="POST" action="forms.php">
-                                        <input type="checkbox" value="" name="checkIsDone" onChange="this.form.submit()" <?= $task['done'] ? 'checked' : '' ?> title="Mark if task is done">
+                                        <input type="checkbox" value="" name="checkIsDone" onChange="this.form.submit()" <?= $task['is_done'] ? 'checked' : '' ?> title="Mark if task is done">
                                         <input type="hidden" name="taskIdForCheck" value="<?= $task['id'] ?>">
                                         <input type="hidden" name="listId" value="<?= $list['id'] ?>">
                                     </form>

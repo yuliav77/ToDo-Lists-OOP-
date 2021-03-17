@@ -1,6 +1,6 @@
 <?php
 
-namespace config;
+namespace src\config;
 
 class Database
 {

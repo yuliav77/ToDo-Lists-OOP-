@@ -17,7 +17,7 @@ $pageTitle = "Login";
         <div class="errorMessageDiv mt-2 mb-2"><?= $errorMessage ? $errorMessage : '' ?></div>
         <form action="forms.php" method="POST">
 			<div class="form-group">
-			<label for="user_name">User Name</label>
+			<label for="userName">User Name</label>
 			<input type="text" class="form-control" id="userName" name="userName" aria-describedby="username" placeholder="Enter username" required>
 		  </div>
 		  <div class="form-group">
