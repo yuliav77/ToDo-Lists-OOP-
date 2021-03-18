@@ -2,15 +2,16 @@
 
 namespace src\models;
 
-class Task extends Element
+class Task extends Element implements ElementInterface
 {
+    const TABLE = 'tasks';
+
     private $isDone;
     private $listId;
 
     public function __construct($db)
     {
         $this->conn = $db;
-        $this->tableName = "tasks";
     }
 
     public function setIsDone($isDone)
@@ -33,28 +34,14 @@ class Task extends Element
         return $this->listId;
     }
 
-
-    public function create ()
+    public function create()
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString
-            ->setTableName($this->tableName)
+            ->setTableName(self::TABLE)
             ->insert(["title", "list_id"], [$this->getTitle(), $this->listId])
             ->execute($this->conn);
         $this->setId($queryResult);
-
-        return $queryResult;
-    }
-
-    public function readAllTasksOfList()
-    {
-        $sqlString = new SQLbuilder();
-        $queryResult = $sqlString
-            ->setTableName($this->tableName)
-            ->select(["id", "title", "is_done", "list_id"])
-            ->where("list_id", $this->listId, "=")
-            ->execute($this->conn);
-
         return $queryResult;
     }
 
@@ -62,11 +49,10 @@ class Task extends Element
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString
-            ->setTableName($this->tableName)
+            ->setTableName(self::TABLE)
             ->delete()
             ->where("id", $this->getId(), "=")
             ->execute($this->conn);
-
         return $queryResult;
     }
 
@@ -74,12 +60,10 @@ class Task extends Element
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString
-            ->setTableName($this->tableName)
+            ->setTableName(self::TABLE)
             ->update("is_done", $this->getIsDone())
             ->where("id", $this->getId(), "=")
             ->execute($this->conn);
-
         return $queryResult;
     }
-
 }

@@ -71,7 +71,7 @@ class SQLbuilder
 
     /** Build WHERE-expression */
 
-    public function where(string $field, string $value, string $operator = '='): SQLBuilder
+    public function where(string $field, $value, string $operator = '='): SQLBuilder
     {
         if (!in_array($this->query->type, ['select', 'update', 'delete'])) {
             throw new \Exception("WHERE can only be added to SELECT, UPDATE OR DELETE");

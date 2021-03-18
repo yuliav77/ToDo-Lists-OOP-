@@ -12,23 +12,12 @@ $authorizedUserName =  $_SESSION['userName'];
 /* Connect to DB */
 
 require_once "connect.php";
-use src\models\ToDoList;
-use src\models\Task;
+use src\models\User;
+
 
 /* Read all lists of authorized user */
 
-$todoList = new ToDoList($databaseConnection);
-$todoList->setUserId($authorizedUserId);
-$userLists = $todoList->readAllListsOfUser();
-$lists = [];
-
-
-/* Add tasks to user lists array */
-
-foreach ($userLists as $list) {
-    $toDoTask = new Task($databaseConnection);
-    $toDoTask->setListId($list['id']);
-    $tasks = $toDoTask->readAllTasksOfList();
-    $list['tasks'] = $tasks;
-    $lists[] = $list;
-}
+$user = new User($databaseConnection);
+$user->setId($authorizedUserId);
+$user->setLists();
+$lists = $user->getLists();

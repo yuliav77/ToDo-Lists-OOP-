@@ -2,14 +2,16 @@
 
 namespace src\models;
 
-class ToDoList extends Element
+class ToDoList extends Element implements ElementInterface
 {
+    const TABLE = 'lists';
+
     private $userId;
+    private $tasks;
 
     public function __construct($db)
     {
         $this->conn = $db;
-        $this->tableName = "lists";
     }
 
     public function setUserId($userId)
@@ -22,27 +24,30 @@ class ToDoList extends Element
         return $this->userId;
     }
 
-    public function create ()
+    public function setTasks()
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString
-            ->setTableName($this->tableName)
+            ->setTableName("tasks")
+            ->select(["id", "title", "is_done", "list_id"])
+            ->where("list_id", $this->getId(), "=")
+            ->execute($this->conn);
+        $this->tasks = $queryResult;
+    }
+
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    public function create()
+    {
+        $sqlString = new SQLbuilder();
+        $queryResult = $sqlString
+            ->setTableName(self::TABLE)
             ->insert(["title", "user_id"], [$this->getTitle(), $this->userId])
             ->execute($this->conn);
         $this->setId($queryResult);
-
-        return $queryResult;
-    }
-
-    public function readAllListsOfUser ()
-    {
-        $sqlString = new SQLbuilder();
-        $queryResult = $sqlString
-            ->setTableName($this->tableName)
-            ->select(["id", "title", "user_id"])
-            ->where("user_id", $this->userId, "=")
-            ->execute($this->conn);
-
         return $queryResult;
     }
 }

@@ -5,7 +5,7 @@ namespace src\models;
 class Element
 {
     protected $conn;
-    protected $tableName;
+
     private $id;
     private $title;
 
