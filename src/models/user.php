@@ -4,7 +4,7 @@ namespace src\models;
 
 class User extends Element
 {
-    public $password;
+    private $password;
 
     public function __construct($db)
     {
