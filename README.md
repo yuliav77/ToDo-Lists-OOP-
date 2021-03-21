@@ -6,19 +6,15 @@ PHP Project (Individual task)
 
 File name  		 	   				| Content
 ------------------------------------|----------------------------------------------------------------------
-config/database.php     			| Database class
-models/user.php						| User class
-models/todolist.php					| List class
-models/task.php						| Task class
+src/config/connect.php              | Connect to database
+src/config/database.php     		| Database class
+src/config/migrations.php           | Script to create database and tables
+src/controllers                     | Controllers folder
+src/models/user.php				    | User class
+src/models/todolist.php				| List class
+src/models/task.php					| Task class
+src/views                           | Views folder
+src/views/templates                 | Templates folder
 index.php							| Main page
-login.php							| Login page
-logout.php							| Logout page
-register.php						| Register page
-header.php							| Header section
-footer.php                          | Footer section
-connect.php                         | Connect to database
-forms.php							| Forms data processing
-userListsAndTasks.php               | Read all lists and tasks of authorized user to show on the main page
-migrations.php                      | Script to create database and tables
 static/js/script.js					| JS script
 static/css/style.css				| CSS styles
