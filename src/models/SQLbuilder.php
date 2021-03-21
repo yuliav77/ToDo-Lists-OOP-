@@ -17,7 +17,6 @@ class SQLbuilder
     public function setTableName($tableName): SQLbuilder
     {
         $this->tableName = $tableName;
-
         return $this;
     }
 
@@ -28,7 +27,6 @@ class SQLbuilder
         $this->reset();
         $this->query->base = "SELECT " . implode(", ", $fields) . " FROM " . $this->tableName;
         $this->query->type = 'select';
-
         return $this;
     }
 
@@ -43,7 +41,6 @@ class SQLbuilder
         $this->reset();
         $this->query->base = "INSERT INTO " . $this->tableName . " (" . implode(", ", $fields) . ") VALUES (" . implode(", ", $values) . ")" ;
         $this->query->type = 'insert';
-
         return $this;
     }
 
@@ -54,7 +51,6 @@ class SQLbuilder
         $this->reset();
         $this->query->base = "DELETE FROM " . $this->tableName;
         $this->query->type = 'delete';
-
         return $this;
     }
 
@@ -65,7 +61,6 @@ class SQLbuilder
         $this->reset();
         $this->query->base = "UPDATE " . $this->tableName . " SET ". $field . " = " . $value;
         $this->query->type = 'update';
-
         return $this;
     }
 
@@ -77,7 +72,6 @@ class SQLbuilder
             throw new \Exception("WHERE can only be added to SELECT, UPDATE OR DELETE");
         }
         $this->query->where[] = "$field $operator '$value'";
-
         return $this;
     }
 
@@ -91,7 +85,6 @@ class SQLbuilder
             $sql .= " WHERE " . implode(' AND ', $query->where);
         }
         $sql .= ";";
-
         return $sql;
     }
 
@@ -102,7 +95,7 @@ class SQLbuilder
         $sth = $conn->prepare($this->getSQL());
         $sth->setFetchMode(\PDO::FETCH_ASSOC);
         if ($sth->execute()) {
-            if ( $this->query->type == "insert") {
+            if ($this->query->type == "insert") {
                 return $conn->lastInsertId();
             } elseif ($this->query->type == "select") {
                 return $sth->fetchAll();
