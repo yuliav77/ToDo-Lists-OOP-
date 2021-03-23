@@ -34,16 +34,20 @@ class Task extends Element implements ElementInterface
         return $this->listId;
     }
 
+    /** Create a Task */
+
     public function create()
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString
             ->setTableName(self::TABLE)
-            ->insert(["title", "list_id"], [$this->getTitle(), $this->listId])
+            ->insert(['title', 'list_id'], [$this->getTitle(), $this->listId])
             ->execute($this->conn);
         $this->setId($queryResult);
         return $queryResult;
     }
+
+    /** Delete Task */
 
     public function delete()
     {
@@ -51,18 +55,20 @@ class Task extends Element implements ElementInterface
         $queryResult = $sqlString
             ->setTableName(self::TABLE)
             ->delete()
-            ->where("id", $this->getId(), "=")
+            ->where('id', $this->getId(), '=')
             ->execute($this->conn);
         return $queryResult;
     }
+
+    /** Change 'Is Done' mark */
 
     public function mark()
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString
             ->setTableName(self::TABLE)
-            ->update("is_done", $this->getIsDone())
-            ->where("id", $this->getId(), "=")
+            ->update('is_done', $this->getIsDone())
+            ->where('id', $this->getId(), '=')
             ->execute($this->conn);
         return $queryResult;
     }

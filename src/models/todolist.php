@@ -24,13 +24,15 @@ class ToDoList extends Element implements ElementInterface
         return $this->userId;
     }
 
+    /** Get all tasks of ToDo List */
+
     public function setTasks()
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString
-            ->setTableName("tasks")
-            ->select(["id", "title", "is_done", "list_id"])
-            ->where("list_id", $this->getId(), "=")
+            ->setTableName('tasks')
+            ->select(['id', 'title', 'is_done', 'list_id'])
+            ->where('list_id', $this->getId(), '=')
             ->execute($this->conn);
         $this->tasks = $queryResult;
     }
@@ -40,12 +42,14 @@ class ToDoList extends Element implements ElementInterface
         return $this->tasks;
     }
 
+    /** Create a ToDo List */
+
     public function create()
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString
             ->setTableName(self::TABLE)
-            ->insert(["title", "user_id"], [$this->getTitle(), $this->userId])
+            ->insert(['title', 'user_id'], [$this->getTitle(), $this->userId])
             ->execute($this->conn);
         $this->setId($queryResult);
         return $queryResult;
