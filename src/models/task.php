@@ -9,11 +9,6 @@ class Task extends Element implements ElementInterface
     private $isDone;
     private $listId;
 
-    public function __construct($db)
-    {
-        $this->conn = $db;
-    }
-
     public function setIsDone($isDone)
     {
         $this->isDone = $isDone;

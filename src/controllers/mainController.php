@@ -4,6 +4,7 @@ namespace src\controllers;
 
 use src\models\ToDoList;
 use src\models\Task;
+use src\views\MainView;
 
 class MainController extends CoreController
 {
@@ -67,4 +68,24 @@ class MainController extends CoreController
         header("Location: /");
     }
 
+    public function getId()
+    {
+        return $this->model->getId();
+    }
+
+    public function getTitle()
+    {
+        return $this->model->getTitle();
+    }
+
+    public function getLists()
+    {
+        return $this->model->getLists();
+    }
+
+    public function render()
+    {
+        $this->view = new MainView($this);
+        echo $this->view->output();
+    }
 }

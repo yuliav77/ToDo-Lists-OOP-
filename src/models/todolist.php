@@ -9,11 +9,6 @@ class ToDoList extends Element implements ElementInterface
     private $userId;
     private $tasks;
 
-    public function __construct($db)
-    {
-        $this->conn = $db;
-    }
-
     public function setUserId($userId)
     {
         $this->userId = $userId;

@@ -9,11 +9,6 @@ class User extends Element implements ElementInterface
     private $password;
     private $toDoLists;
 
-    public function __construct($db)
-    {
-        $this->conn = $db;
-    }
-
     public function setPassword($password)
     {
         $this->password = $password;
@@ -79,7 +74,7 @@ class User extends Element implements ElementInterface
 
     /** Check If User Exists With Name And Password */
 
-    public function checkIfUserExistsWithNameAndPassword ()
+    public function checkIfUserExistsWithNameAndPassword()
     {
         $sqlString = new SQLbuilder();
         $queryResult = $sqlString

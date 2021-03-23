@@ -2,6 +2,8 @@
 
 namespace src\controllers;
 
+use src\views\RegisterView;
+
 class RegisterController extends CoreController
 {
     public function postAction($request)
@@ -21,5 +23,11 @@ class RegisterController extends CoreController
             $_SESSION['regErrorMessage'] = "You can not use this name, we have already had such user!";
             header("Location: /register");
         }
+    }
+
+    public function render()
+    {
+        $this->view = new RegisterView($this);
+        echo $this->view->output();
     }
 }

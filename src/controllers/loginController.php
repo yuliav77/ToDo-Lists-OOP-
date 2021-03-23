@@ -2,6 +2,8 @@
 
 namespace src\controllers;
 
+use src\views\LoginView;
+
 class LoginController extends CoreController
 {
     public function postAction($request)
@@ -20,5 +22,10 @@ class LoginController extends CoreController
             unset($_SESSION['loginErrorMessage']);
             header("Location: /");
         }
+    }
+    public function render()
+    {
+        $this->view = new LoginView($this);
+        echo $this->view->output();
     }
 }

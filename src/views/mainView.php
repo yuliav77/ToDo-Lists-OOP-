@@ -8,9 +8,9 @@ class MainView extends CoreView
     {
         $pageTitle = "ToDo Lists";
         $currentView = 'src/views/templates/mainTemplate.php';
-        $authorizedUserId = $this->model->getId();
-        $authorizedUserName = $this->model->getTitle();
-        $lists = $this->model->getLists();
+        $authorizedUserId = $this->controller->getId();
+        $authorizedUserName = $this->controller->getTitle();
+        $lists = $this->controller->getLists();
         include('src/views/templates/templateView.php');
     }
 }

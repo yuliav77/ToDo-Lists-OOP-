@@ -9,6 +9,11 @@ class Element
     private $id;
     private $title;
 
+    public function __construct($db)
+    {
+        $this->conn = $db;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
