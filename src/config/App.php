@@ -22,35 +22,38 @@ class App
     public function run()
     {
         $user = new User($this->conn);
-        $url = trim($_SERVER['REQUEST_URI'], '/');
+        $path = trim($_SERVER['REQUEST_URI'], '/');
 
         if (empty($_SESSION['userId'])) {
 
-            /* User is not authorized */
+            /** User is not authorized */
 
-            $url = !empty($url) ? $url : 'login';
-            $controllerName = 'src\controllers\\' . ucfirst($url . 'Controller');
-            $viewName =  'src\views\\' . ucfirst($url . 'View');
-            $controller = new $controllerName($user);
+            $path = !empty($path) ? $path : 'login';
 
         } else {
 
-            /* Authorized user */
+            /** Authorized user */
 
+            $path = 'main';
             $user->setId($_SESSION['userId']);
             $user->setTitle($_SESSION['userName']);
             $user->setLists();
-            $controller = new MainController($user);
-
-            /* Logout action */
-
-            if (isset($_GET['action'])) {
-                $controller->{$_GET['action']}();
-            }
-
         }
 
-        /* Forms computing */
+        $controllerName = 'src\controllers\\' . ucfirst($path . 'Controller');
+        $controllerFile = $controllerName . '.php';
+        if (!file_exists($controllerFile)) {
+            $controllerName = 'src\controllers\ErrorController';
+        }
+        $controller = new $controllerName($user);
+
+        /** Logout action */
+
+        if (isset($_GET['action'])) {
+            $controller->{$_GET['action']}();
+        }
+
+        /** Forms computing */
 
         if (isset($_POST) && !empty($_POST)) {
             $controller->postAction($_POST, $this->conn);

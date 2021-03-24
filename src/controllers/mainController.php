@@ -5,6 +5,7 @@ namespace src\controllers;
 use src\models\ToDoList;
 use src\models\Task;
 use src\views\MainView;
+use src\views\Error404View;
 
 class MainController extends CoreController
 {
