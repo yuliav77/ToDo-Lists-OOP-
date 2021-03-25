@@ -3,12 +3,6 @@
 namespace src\config;
 
 use src\models\User;
-use src\controllers\LoginController;
-use src\controllers\MainController;
-use src\controllers\RegisterController;
-use src\views\LoginView;
-use src\views\MainView;
-use src\views\RegisterView;
 
 class App
 {
@@ -16,8 +10,8 @@ class App
 
     public function init():void
     {
-        $database = new Database();
-        $this->conn = $database->getConnection();
+        $instance = Database::getInstance();
+        $this->conn = $instance->getConnection();
     }
     public function run()
     {
