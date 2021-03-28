@@ -1,9 +1,11 @@
 <?php
 
-include_once "database.php";
+require_once 'vendor/autoload.php';
 
-$database = new Database();
-$databaseConnection = $database->getConnection();
+use src\config\Database;
+
+$instance = Database::getInstance();
+$databaseConnection = $instance->getConnection();
 
 // users
 $sql = <<<'SQL'
